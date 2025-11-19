@@ -15,7 +15,6 @@ test:
   script:
     - docker build -t booking-api-tests .
     - docker run --rm -v $(pwd)/TestResults:/app/TestResults booking-api-tests
-    - echo "Listing TestResults directory:"
     - ls -la TestResults/
   artifacts:
     when: always
