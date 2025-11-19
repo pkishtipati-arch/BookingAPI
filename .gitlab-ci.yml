@@ -1,17 +1,20 @@
-image: mcr.microsoft.com/dotnet/sdk:8.0
+image: docker:latest
+
+services:
+  - docker:dind
 
 stages:
   - test
 
 variables:
-  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: "/certs"
 
 test:
   stage: test
   script:
-    - dotnet restore
-    - dotnet build --configuration Release
-    - dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx" --logger "html;LogFileName=test-results.html" --results-directory ./TestResults
+    - docker build -t booking-api-tests .
+    - docker run --rm -v $(pwd)/TestResults:/app/TestResults booking-api-tests
     - echo "Listing TestResults directory:"
     - ls -la TestResults/
   artifacts:
