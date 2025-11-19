@@ -1,0 +1,13 @@
+services:
+  booking-api-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: booking-api-tests
+    volumes:
+      # Mount host ./TestResults to container /app/TestResults
+      # Test reports (HTML & TRX) will be saved to host ./TestResults folder
+      - ./TestResults:/app/TestResults
+    environment:
+      - DOTNET_ENVIRONMENT=Production
+      - BASE_URL=https://restful-booker.herokuapp.com

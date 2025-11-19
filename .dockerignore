@@ -1,0 +1,23 @@
+# Build outputs
+bin/
+obj/
+TestResults/
+
+# IDE files
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Documentation
+*.md
+!README.md
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore

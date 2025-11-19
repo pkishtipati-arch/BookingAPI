@@ -1,0 +1,27 @@
+image: mcr.microsoft.com/dotnet/sdk:8.0
+
+stages:
+  - test
+
+variables:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+test:
+  stage: test
+  script:
+    - dotnet restore
+    - dotnet build --configuration Release
+    - dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx" --logger "html;LogFileName=test-results.html" --results-directory ./TestResults
+    - echo "Current directory:"
+    - cd
+    - echo "Searching for TestReport.html:"
+    - dir TestReport.html /s /b
+    - echo "Listing TestResults directory:"
+    - dir TestResults /s
+  artifacts:
+    when: always
+    paths:
+      - TestResults/
+    reports:
+      junit: TestResults/*.trx
+    expire_in: 30 days
