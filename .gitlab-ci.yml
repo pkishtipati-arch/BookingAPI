@@ -12,12 +12,8 @@ test:
     - dotnet restore
     - dotnet build --configuration Release
     - dotnet test --configuration Release --logger "trx;LogFileName=test-results.trx" --logger "html;LogFileName=test-results.html" --results-directory ./TestResults
-    - echo "Current directory:"
-    - cd
-    - echo "Searching for TestReport.html:"
-    - dir TestReport.html /s /b
     - echo "Listing TestResults directory:"
-    - dir TestResults /s
+    - ls -la TestResults/
   artifacts:
     when: always
     paths:
