@@ -16,7 +16,8 @@ RUN dotnet build --configuration Release --no-restore
 # Create TestResults directory in container
 RUN mkdir -p /app/TestResults
 
+# Set environment variable for test results path
+ENV TEST_RESULTS_DIR=/app/TestResults
+
 # Run tests and exit (container will stop after tests complete)
-# --results-directory tells dotnet test where to save TRX files
-# ExtentReports (from Hooks.cs) also saves to /app/TestResults
 CMD ["dotnet", "test", "--configuration", "Release", "--no-build", "--results-directory", "/app/TestResults", "--logger", "trx;LogFileName=test-results.trx", "--logger", "console;verbosity=normal"]

@@ -15,9 +15,14 @@ namespace BookingAPI.StepDefinitions
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            var projectRoot = Path.GetFullPath(Path.Combine(baseDir, @"..\..\.."));
-            var resultsDir = Path.Combine(projectRoot, "TestResults");
+            var resultsDir = Environment.GetEnvironmentVariable("TEST_RESULTS_DIR") ?? "/app/TestResults";
+            
+            if (!Path.IsPathRooted(resultsDir))
+            {
+                var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+                var projectRoot = Path.GetFullPath(Path.Combine(baseDir, @"..\..\.."));
+                resultsDir = Path.Combine(projectRoot, "TestResults");
+            }
             
             Directory.CreateDirectory(resultsDir);
             
